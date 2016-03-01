@@ -1,12 +1,14 @@
 import React from 'react';
 import {render} from 'react-dom';
+import { Router, Route} from 'react-router';
 import { createStore, compose, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
-import TweetListContainer from './ui/tweetList/TweetListContainer';
 import thunk from 'redux-thunk';
 import createLogger from 'redux-logger';
 import rootReducer from './reducers';
 import DevTools from './lib/devtools';
+
+import TweetListContainer from './ui/tweetList/TweetListContainer';
 
 
 const finalCreateStore = compose(
@@ -17,19 +19,12 @@ const finalCreateStore = compose(
 const store = finalCreateStore(rootReducer);
 
 render(
-  <Provider store={store}>
-    <div>
-      <TweetListContainer />
-      <DevTools />
-    </div>
-  </Provider>,
+  <div>
+    <Provider store={store}>
+      <Router>
+        <Route path="/" component={ TweetListContainer }/>
+      </Router>
+    </Provider>
+  </div>,
   document.getElementById('app')
 );
-
-if (module.hot) {
-  // Enable Webpack hot module replacement for reducers
-  module.hot.accept('./reducers.js', () => {
-    const nextRootReducer = require('./reducers.js');
-    store.replaceReducer(nextRootReducer);
-  });
-}

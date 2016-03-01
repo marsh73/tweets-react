@@ -5,6 +5,7 @@ import TweetList from './TweetList.jsx';
 import ChangeHandle from './ChangeHandle';
 import tweets from './tweets.js';
 import {fetchTweets, fetchBanner, fetchProfile} from '../../domain/tweetList/tweetListActions';
+import {RaisedButton, Slider} from 'material-ui/lib';
 
 
 export default class TweetListContainer extends React.Component {
@@ -13,6 +14,11 @@ export default class TweetListContainer extends React.Component {
     return {
       backgroundImage: 'url(' + banner + ')',
     }
+  }
+
+  changeThis(e){
+    console.log(e)
+    console.log(this.refs)
   }
 
   componentDidMount() {

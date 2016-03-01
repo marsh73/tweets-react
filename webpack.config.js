@@ -3,30 +3,44 @@ var webpack = require('webpack')
 
 var config = {
   devtool: 'cheap-module-eval-source-map',
-  entry: ['webpack/hot/dev-server', './src/main.js'],
+  entry: {
+    app: ['webpack/hot/dev-server', './src/main.js'],
+    vendors: ['react', 'redux']
+  },
   output: {
     path: path.resolve(__dirname, 'build'),
-    filename: '/bundle.js',
+    filename: '/app.js',
     publicPath: './build/'
+  },
+  node: {
+    fs: "empty"
   },
   plugins: [
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin()
+    new webpack.NoErrorsPlugin(),
+    new webpack.optimize.CommonsChunkPlugin('vendors', 'vendors.js')
   ],
   resolve : {
     extensions : ['', '.js', '.jsx']
   },
   module: {
     loaders: [{
-      test: /\.jsx?$/, // A regexp to test the require path. accepts either js or jsx
-      loader: 'babel-loader', // The module to load. "babel" is short for "babel-loader"
-      query: {
-        plugins: ['transform-runtime'],
-        presets: ['es2015', 'stage-0', 'react']
-      },
+      test: /\.js?$/, // A regexp to test the require path. accepts either js or jsx
+      loader: 'babel', // The module to load. "babel" is short for "babel-loader"
       exclude: /node_modules/,
-      include: __dirname
+      query: {
+        plugins: ['transform-runtime']
+      }
+    },
+    {
+      test: /\.js|jsx$/,
+      exclude: /node_modules/,
+      loaders: ['isparta']
+    },
+    {
+      test: /\.scss$/,
+      loader: 'style!css!sass'
     }]
   }
 };
