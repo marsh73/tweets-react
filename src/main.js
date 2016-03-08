@@ -1,30 +1,22 @@
 import React from 'react';
-import {render} from 'react-dom';
-import { Router, Route} from 'react-router';
-import { createStore, compose, applyMiddleware } from 'redux';
-import { Provider } from 'react-redux';
-import thunk from 'redux-thunk';
-import createLogger from 'redux-logger';
-import rootReducer from './reducers';
-import DevTools from './lib/devtools';
+import { render } from 'react-dom';
+import { Provider } from 'react-redux'
+import { Router, browserHistory,useRouterHistory } from 'react-router'
+import { syncHistoryWithStore } from 'react-router-redux'
+import { createHashHistory } from 'history'
 
-import TweetListContainer from './ui/tweetList/TweetListContainer';
+import { configureStore } from './store'
+import routes from './routes'
 
-
-const finalCreateStore = compose(
-  applyMiddleware(thunk, createLogger()),
-  DevTools.instrument()
-)(createStore);
-
-const store = finalCreateStore(rootReducer);
+let state = window.__initialState__ || undefined
+const store = configureStore(browserHistory, state)
+const appHistory = useRouterHistory(createHashHistory)({ queryKey: false })
+const history = syncHistoryWithStore(appHistory, store)
 
 render(
-  <div>
-    <Provider store={store}>
-      <Router>
-        <Route path="/" component={ TweetListContainer }/>
-      </Router>
-    </Provider>
-  </div>,
+  <Provider store={store}>
+    <Router history={history} routes={routes}>
+    </Router>
+  </Provider>,
   document.getElementById('app')
 );

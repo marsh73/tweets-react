@@ -1,56 +1,64 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import fetch from 'isomorphic-fetch';
-import TweetList from './TweetList.jsx';
-import ChangeHandle from './ChangeHandle';
-import tweets from './tweets.js';
-import {fetchTweets, fetchBanner, fetchProfile} from '../../domain/tweetList/tweetListActions';
-import {RaisedButton, Slider} from 'material-ui/lib';
+import React from 'react'
+import { connect } from 'react-redux'
+import fetch from 'isomorphic-fetch'
+import TweetList from './TweetList.jsx'
+import ChangeHandle from './ChangeHandle'
+import tweets from './tweets.js'
+import {fetchTweets, fetchBanner, updateHandle, fetchProfile} from '../../domain/tweetList/tweetListActions'
+import {RaisedButton, Slider} from 'material-ui/lib'
 
 
 export default class TweetListContainer extends React.Component {
 
-  _getBackgroundImage(banner) {
+  getBackgroundImage(banner) {
     return {
       backgroundImage: 'url(' + banner + ')',
     }
   }
 
-  changeThis(e){
-    console.log(e)
-    console.log(this.refs)
+  componentDidUpdate (prevProps, prevState) {
+    if(prevProps.params !== this.props.params){
+      this.updateUser()
+    }
+  }
+
+  updateUser () {
+    const handle = this.props.params.handle
+    let user = handle ? handle : 'lakings'
+    const { dispatch } = this.props
+    dispatch(fetchBanner( handle ))
+    dispatch(fetchProfile( handle ))
+    dispatch(fetchTweets( handle ))
   }
 
   componentDidMount() {
-    const { dispatch } = this.props
-    dispatch(fetchBanner('lakings'));
-    dispatch(fetchProfile('lakings'));
-    dispatch(fetchTweets('lakings'));
+
+    this.updateUser()
   }
 
   render() {
-    const { dispatch, loadingTweets, loadingProfile, loadingBanner, profileName, profileImg, banner } = this.props;
-    const tweets = this.props.tweets.toArray();
+    const { dispatch, loadingTweets, loadingProfile, loadingBanner, profileName, profileImg, banner } = this.props
+    const tweets = this.props.tweets.toArray()
     return (
       <div>
-        <div style={this._getBackgroundImage(banner)} className="banner tweetyBanner"></div>
+        <div style={this.getBackgroundImage(banner)} className="banner tweetyBanner"></div>
         <div className="wrapper">
           <h1> {profileName} </h1>
           <div className="container-fluid">
             <img src={profileImg} className="twitterProfileImg hello"/>
             <div className="row-fluid">
-              <ChangeHandle dispatch={dispatch} />
+              <ChangeHandle dispatch={dispatch}/>
               <TweetList tweets={tweets}/>
             </div>
           </div>
         </div>
       </div>
-    );
+    )
   }
 }
 
 
-const mapStateToProps = state => ({ ...state.twtProfile });
+const mapStateToProps = state => ({ ...state.default.twtProfile, ...state.routing })
 
 
-export default connect(mapStateToProps)(TweetListContainer);
+export default connect(mapStateToProps)(TweetListContainer)

@@ -8,11 +8,17 @@ const initialState = {
   tweets: List(),
   profileName: null,
   profileImg: null,
-  banner: null
+  banner: null,
+  handle: null
 };
 
 export const twtProfile = (state = initialState, action) => {
   switch (action.type) {
+    case types.CHANGED_HANDLE:
+      return Object.assign({}, state, {
+        handle : action.handle
+      })
+
     case types.REQUESTED_TWEETS:
       return Object.assign({}, state, {
         loadingTweets : true

@@ -1,7 +1,15 @@
 var path = require('path');
 var webpack = require('webpack')
+var port = process.env.PORT || 8080;
+var webpackPort = process.env.WEBPACK_PORT || 8090;
 
 var config = {
+  devServer: {
+    historyApiFallback:false,
+    contentBase: 'build'
+  },
+  port: port,
+  webpackPort: webpackPort,
   devtool: 'cheap-module-eval-source-map',
   entry: {
     app: ['webpack/hot/dev-server', './src/main.js'],

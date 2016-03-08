@@ -1,5 +1,13 @@
-import React, { Component, PropTypes } from 'react';
-import {fetchTweets, fetchBanner, fetchProfile} from '../../domain/tweetList/tweetListActions';
+import React, { Component, PropTypes } from 'react'
+import {fetchTweets, fetchBanner, fetchProfile} from '../../domain/tweetList/tweetListActions'
+
+const contextTypes = {
+  router: PropTypes.object.isRequired
+}
+
+const propTypes = {
+  dispatch: PropTypes.func.isRequired
+}
 
 export default class ChangeHandle extends Component {
 
@@ -9,9 +17,7 @@ export default class ChangeHandle extends Component {
     const input = this.refs.handle;
     const value = input.value.trim();
     if (value) {
-      dispatch(fetchBanner(value));
-      dispatch(fetchProfile(value));
-      dispatch(fetchTweets(value));
+      this.context.router.push({pathname: '/user/' + value})
       input.value = '';
     }
   }
@@ -31,6 +37,6 @@ export default class ChangeHandle extends Component {
   }
 }
 
-ChangeHandle.propTypes = {
-  dispatch: PropTypes.func.isRequired
-};
+ChangeHandle.contextTypes = contextTypes
+
+ChangeHandle.propTypes = propTypes
