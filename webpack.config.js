@@ -5,12 +5,12 @@ var webpackPort = process.env.WEBPACK_PORT || 8090;
 
 var config = {
   devServer: {
-    historyApiFallback:false,
+    historyApiFallback:true,
     contentBase: 'build'
   },
   port: port,
   webpackPort: webpackPort,
-  devtool: 'cheap-module-eval-source-map',
+  devtool: 'sourcemap',
   entry: {
     app: ['webpack/hot/dev-server', './src/main.js'],
     vendors: ['react', 'redux']
@@ -34,17 +34,9 @@ var config = {
   },
   module: {
     loaders: [{
-      test: /\.js?$/, // A regexp to test the require path. accepts either js or jsx
-      loader: 'babel', // The module to load. "babel" is short for "babel-loader"
-      exclude: /node_modules/,
-      query: {
-        plugins: ['transform-runtime']
-      }
-    },
-    {
-      test: /\.js|jsx$/,
-      exclude: /node_modules/,
-      loaders: ['isparta']
+      test: /\.js|jsx$/, // A regexp to test the require path. accepts either js or jsx
+      loader: 'babel-loader', // The module to load. "babel" is short for "babel-loader"
+      exclude: /node_modules/
     },
     {
       test: /\.scss$/,

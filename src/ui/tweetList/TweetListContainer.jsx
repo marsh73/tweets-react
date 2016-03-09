@@ -26,13 +26,10 @@ export default class TweetListContainer extends React.Component {
     const handle = this.props.params.handle
     let user = handle ? handle : 'lakings'
     const { dispatch } = this.props
-    dispatch(fetchBanner( handle ))
-    dispatch(fetchProfile( handle ))
-    dispatch(fetchTweets( handle ))
+    dispatch(updateHandle(handle))
   }
 
   componentDidMount() {
-
     this.updateUser()
   }
 

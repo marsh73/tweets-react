@@ -7,7 +7,7 @@ import nock from 'nock'
 const middlewares = [ thunk ]
 const mockStore = configureMockStore(middlewares)
 
-describe('tweetListActions', () => {
+xdescribe('tweetListActions', () => {
 
   afterEach(() => {
     nock.cleanAll()
