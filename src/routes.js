@@ -9,7 +9,7 @@ const routes = (
   <Route path="/" component={App}>
     <IndexRedirect to="/user/lakings" />
     <Route path="home" component={Home} />
-    <Route path="user/:handle" component={TweetListContainer} />
+    <Route path="user(/:handle)" component={TweetListContainer} />
   </Route>
 )
 
