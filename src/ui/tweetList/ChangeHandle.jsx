@@ -11,7 +11,6 @@ const propTypes = {
 
 export default class ChangeHandle extends Component {
 
-
   changeHandle(e, dispatch) {
     e.preventDefault();
     const input = this.refs.handle;

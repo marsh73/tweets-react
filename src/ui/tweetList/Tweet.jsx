@@ -1,22 +1,22 @@
-import React, { Component, PropTypes } from 'react';
-import {linkMentions} from './tweetUtils.js';
+import React, { Component, PropTypes } from 'react'
+import {linkMentions} from './tweetUtils.js'
 
-export default class Tweet extends Component {
+function rawMarkup (text) {
+  return { __html: linkMentions(text) }
+}
 
-  rawMarkup() {
-     return { __html: linkMentions(this.props.text) };
-   }
+const Tweet = props => {
 
-  render() {
-    return (
-      <li className="tweetItem">
-        <span className="glyphicon glyphicon-pencil tweetPencil" />
-        <span dangerouslySetInnerHTML={this.rawMarkup()} />
-      </li>
-    );
-  }
+  return (
+    <li className="tweetItem">
+      <span className="glyphicon glyphicon-pencil tweetPencil" />
+      <span dangerouslySetInnerHTML={rawMarkup(props.text)} />
+    </li>
+  )
 }
 
 Tweet.propTypes = {
   text: PropTypes.string.isRequired
-};
+}
+
+export default Tweet
