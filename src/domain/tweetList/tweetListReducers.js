@@ -1,5 +1,5 @@
-import * as types from './tweetListActionTypes.js';
-import { List, Map } from 'immutable';
+import * as types from './tweetListActionTypes.js'
+import { List, Map } from 'immutable'
 
 const initialState = {
   loadingTweets: false,
@@ -22,6 +22,6 @@ export const twtProfile = (state = initialState, action) => {
       })
 
     default:
-      return state;
+      return state
   }
 }

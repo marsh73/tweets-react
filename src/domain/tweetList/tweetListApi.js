@@ -15,6 +15,7 @@ function getMyTweets (handle) {
 export const updateHandle = (handle) => {
   return axios.all([getMyBanner(handle), getMyProfile(handle), getMyTweets(handle)])
     .then( axios.spread( (banner, profile, tweets) => {
+      console.log('returning data')
       var bannerL = banner ? banner.data.sizes['1500x500'].url : '';
       return {
         banner: bannerL,

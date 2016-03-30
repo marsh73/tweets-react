@@ -4,24 +4,25 @@ import * as types from './tweetListActionTypes'
 import { updateHandle } from './tweetListActions'
 import * as api from './tweetListApi'
 import nock from 'nock'
-import axios from 'axios'
+
 
 
 const middlewares = [ thunk ]
 const mockStore = configureMockStore(middlewares)
 
 describe('tweetListActions', () => {
-  const user = 'test'
+  const user = 'lakings'
 
   beforeEach(() => {
     nock('http://localhost:3000/api/')
       .get('/tweets')
+      .query(true)
       .reply(200, { body: { tweets: ['list'] }})
-    nock('http://localhost:3000/api/')
       .get('/banner')
+      .query(true)
       .reply(200, { body: { banner: { sizes: { '1500x500': ['list']}} }})
-    nock('http://localhost:3000/api/')
       .get('/profile')
+      .query(true)
       .reply(200, { body: { profile: {'name': 'john'} }})
   })
 
@@ -33,6 +34,7 @@ describe('tweetListActions', () => {
 
     spyOn(api, 'updateHandle').and.callThrough()
 
+
     function success(user) {
       return {
         type: types.CHANGED_HANDLE,
@@ -40,11 +42,15 @@ describe('tweetListActions', () => {
       }
     }
     const store = mockStore({})
+
     store.dispatch(updateHandle(user))
       .then(() => {
         console.log('hello', store.getActions())
         done()
-      }).catch(done)
+      })
+      .then(done)
+      .catch(done)
   })
+
 
 })
