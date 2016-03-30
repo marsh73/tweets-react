@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react'
-import {fetchTweets, fetchBanner, fetchProfile} from '../../domain/tweetList/tweetListActions'
 
 const contextTypes = {
   router: PropTypes.object.isRequired

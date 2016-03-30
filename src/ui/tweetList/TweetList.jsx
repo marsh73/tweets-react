@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import Tweet from './Tweet.jsx';
 
 const TweetList = props => {
-  const tweets = props.tweets.map(tweet => <Tweet text={tweet.text} key={tweet.id_str}></Tweet>)
+  const tweets = props.tweets.map(tweet => <Tweet text={tweet.text} key={tweet.id_str} />)
 
   return (
     <div className="row-fluid">

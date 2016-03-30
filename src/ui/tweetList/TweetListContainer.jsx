@@ -4,7 +4,7 @@ import fetch from 'isomorphic-fetch'
 import TweetList from './TweetList.jsx'
 import ChangeHandle from './ChangeHandle'
 import tweets from './tweets.js'
-import {fetchTweets, fetchBanner, updateHandle, fetchProfile} from '../../domain/tweetList/tweetListActions'
+import { updateHandle } from '../../domain/tweetList/tweetListActions'
 import {RaisedButton, Slider} from 'material-ui/lib'
 
 

@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react'
-import {linkMentions} from './tweetUtils.js'
+import { linkMentions } from './tweetUtils.js'
 
 function rawMarkup (text) {
   return { __html: linkMentions(text) }
